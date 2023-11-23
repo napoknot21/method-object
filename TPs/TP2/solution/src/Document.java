@@ -36,6 +36,70 @@ public class Document {
         this.position = -1;
     
     }
+    
+    
+    /**
+     * Pass to previous section if the $position is positive
+     */
+    public void moveToPreviousSection () {
+
+        if (this.position > 0) this.position--;
+
+    }
+
+
+    /**
+     * Move the position pointer to the next position
+     */
+    public void moveToNextPosition () {
+
+        if (this.position < this.sections.size() - 1) this.position++;
+
+    }
+    
+
+    /**
+     *
+     *
+     * @return Return the current section
+     */
+    public Section getCurrentSection () {
+
+        return (this.position >= 0 && this.position < this.sections.size()) ? this.sections.get(this.position) : null;
+
+    }
+
+    
+    /**
+     * The function adds a section to the LinkedList sections
+     *
+     * @param section : The section to add
+     */
+    public boolean addSection (Section section) {
+
+        try {
+
+            this.sections.add(this.position+1, section);
+            return true;
+
+        } catch (IndexOutOfBoundsException e) {
+            
+            return false;
+
+        }
+    }
+
+
+    /**
+     * Getter for the title
+     *
+     * @return the string title
+     */
+    public String getTitle () {
+
+        return this.title;
+
+    }
 
 
     /**
@@ -43,7 +107,7 @@ public class Document {
      *
      * @param args : String arrgay of input
      */
-    public static void main(String[] args){
+    public static void main (String[] args) {
       // A completer
     }
 
