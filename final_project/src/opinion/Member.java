@@ -4,13 +4,30 @@ import java.util.LinkedList;
 
 public class Member {
 
+    /**
+     * Attribute username (pseudo) of the member
+     */
     private String login;
 
+    /**
+     * Attribute password of the member
+     */
     private String password;
 
+    /**
+     * Description of the member
+     */
     private String description;
 
-   // private LinkedList<Review> reviews;
+    /**
+     * The social network attribute of the member
+     */
+    //private SocialNetwork socialNetwork;
+    
+    /**
+     * Member's attribute reviews array
+     */
+    //private ArrayList<Review> reviews;
 
 
     public Member (String login, String password, String description) {
@@ -42,4 +59,3 @@ public class Member {
 
 
 }
-'
