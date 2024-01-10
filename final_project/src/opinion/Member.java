@@ -22,20 +22,16 @@ public class Member {
     /**
      * The social network attribute of the member
      */
-    //private SocialNetwork socialNetwork;
-    
-    /**
-     * Member's attribute reviews array
-     */
-    //private ArrayList<Review> reviews;
+    private SocialNetwork socialNetwork;
 
 
-    public Member (String login, String password, String description) {
+    public Member (String login, String password, String description, SocialNetwork socialNetwork) {
 
         this.login = login;
         this.password = password;
         this.description = description;
-        //this.reviews = new LinkedList<Review>();
+        this.socialNetwork = socialNetwork;
+
     }
 
 
@@ -45,17 +41,28 @@ public class Member {
 
     }
 
+
     public String getPassword () {
 
         return this.password;
+
     }
+
 
     public String getDescription () {
 
         return this.description;
+
+    }
+
+    public SocialNetwork getSocialNetwork () {
+
+        return this.socialNetwork;
+
     }
 
 
+    public void updateProfile ()
 
 
 }

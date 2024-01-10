@@ -32,10 +32,14 @@ public class Film extends Item {
     }
 
 
-    public int duration () {
+    public int getDuration () {
 
         return this.duration;
     }
 
+
+    public String toString () {
+        return super.getTitle() + ", " + super.getKind() + ", " + this.getDirector() + ", " + this.getScenarist() + ", " + this.getDuration();
+    }
 
 }

@@ -1,5 +1,6 @@
 package tests;
 import opinion.ISocialNetwork;
+
 import opinion.SocialNetwork;
 import exceptions.BadEntryException;
 import exceptions.MemberAlreadyExistsException;
@@ -7,9 +8,14 @@ import exceptions.ItemFilmAlreadyExistsException;
 import exceptions.ItemBookAlreadyExistsException;
 import exceptions.NotMemberException;
 import exceptions.NotItemException;
+
+import java.lang.reflect.Member;
 import java.util.LinkedList;
 
+
+
 public class SocialNetworkTest {
+	
 
     public static void initialisationTest() {
 	System.out.println("Testing  initialisation  of a brand new ISocialNetwork  ");
@@ -42,6 +48,8 @@ public class SocialNetworkTest {
 	int nbFilms = 0;
 
 	System.out.println("Tests  ajouter des membres au réseau social  ");
+	
+	
 
 
 	ISocialNetwork sn = new SocialNetwork();
@@ -543,7 +551,50 @@ public class SocialNetworkTest {
 
     public static void reviewItemTest() {
 	System.out.println("Tests  de reviewing d'items du réseau social  ");
-	// to complete
+	try {
+	    // un réseau social créé ne doit avoir ni membres ni items
+	    ISocialNetwork sn = new SocialNetwork();
+			
+	    // ajout de 3 membres avec entrées "correctes"
+	    sn.addMember("Paul", "paul", "lecteur impulsif");
+	    sn.addMember("Antoine", "antoine", "grand amoureux de littérature");
+	    sn.addMember("Alice", "alice", "passionnée de bande dessinée");
+	    
+	    //ajout de films et de livres
+	    sn.addItemBook("Alice", "alice", "Lignes de faille", "roman", "Nancy Huston", 220);
+	    sn.addItemFilm("Alice", "alice", "Le train sifflera trois fois", "western 1952", "Fred Zinnemann", "Carl Foreman", 85);
+	    sn.addItemBook("Paul", "paul", "La peste", "roman", " Albert Camus", 336);
+	    sn.addItemFilm("Paul", "paul", "Avant l'aube", "thriller 2011", "Raphael Jacoulot", "Lise Macheboeuf et Raphael Jacoulot", 104);
+	    sn.addItemBook("Antoine", "antoine", "Guerre et Paix", "roman", "Leon Tosltoi", 1247);
+	    sn.addItemFilm("Antoine", "antoine", "Le discours d'un roi", "drame historique 2010", "Tom Hooper", "David Seidler", 118);
+	    sn.addItemFilm("Alice", "alice", "Black Swan", "drame 2010", "Darren Aronofsky", "John McLaughlin et Mark Heyman et Andres Heinz", 103);
+	    sn.addItemBook("Alice", "alice", "Le train sifflera trois fois", "roman", " J. W. Cunningham", 257);
+	    sn.addItemFilm("Paul", "paul", "Guerre et Paix", "aventure historique", "King Vidor", "Bridget Boland, Robert Westbery", 200);
+	    
+	    try {
+			sn.reviewItemBook(null, "antoine", "La peste", 4.5f, "trop long");	
+			System.out.println("Erreur 10.0.1 :  l'ajout d'un film avec pseudo non instancié est accepté ");
+		    }
+		catch (BadEntryException e) {		
+		    }
+	    
+	    try {
+			sn.reviewItemBook("Antoine", null, "La peste", 4.5f, "trop long");	
+			System.out.println("Erreur 10.0.2 :  l'ajout d'un review d'un livre avec password non instancié est accepté ");
+		    }
+		catch (BadEntryException e) {		
+		    }
+	    
+	    
+	    
+	    
+	}
+	catch (Exception e) {
+	    System.out.println("Exception non prévue : " + e);
+	    e.printStackTrace();
+	}
+	
+	
 
     }
 
@@ -647,7 +698,7 @@ public class SocialNetworkTest {
 		    if (!sFilm.contains("Guerre et Paix")  &&  !sFilm.contains("aventure historique")  && !sFilm.contains("King Vidor") && !sFilm.contains("Bridget Boland, Robert Westbery") && !sFilm.contains("200"))
 			System.out.println("Erreur 9.6 :  la consultation d'un item film et livre existant ne rend pas la chaîne du film qui correspond ");
 		    if (!sLivre.contains("2.5") || !sFilm.contains("4.0")) 					
-			System.out.println(/*"Erreur 9.6 :  la consultation d'un item film et livre existant ne rend pas les chaînes note qui correspondent */"");				
+			System.out.println("Erreur 9.6 :  la consultation d'un item film et livre existant ne rend pas les chaînes note qui correspondent ");				
 		}
 	    }
 	    catch (BadEntryException e) {
@@ -674,13 +725,13 @@ public class SocialNetworkTest {
     public static void main(String[] args) {
 	initialisationTest();
 	System.out.println("\n\n **********************************************************************************************\n");
-	addMemberTest();
-	System.out.println("\n\n **********************************************************************************************\n");
-	addItemTest();
-	System.out.println("\n\n **********************************************************************************************\n");
+	//addMemberTest();
+	//System.out.println("\n\n **********************************************************************************************\n");
+	//addItemTest();
+	// System.out.println("\n\n **********************************************************************************************\n");
 	reviewItemTest();
-	System.out.println("\n\n **********************************************************************************************\n");
-	consultItemsTest();
+	// System.out.println("\n\n **********************************************************************************************\n");
+	 consultItemsTest();
     }
 
 }

@@ -28,5 +28,11 @@ public class Book extends Item {
     }
 
 
+    public String toString() {
+
+        return super.getTitle() + ", " + super.getKind() + ", " + this.getAuthor() + ", " + this.getNbPages();
+    
+    }
+
 
 }
