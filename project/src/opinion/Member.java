@@ -1,4 +1,4 @@
-package src
+package opinion;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -14,6 +14,11 @@ public class Member {
      * Attribute password of the member
      */
     private String password;
+
+    /**
+     * Description of the member
+     */
+    private String description;
 
     /**
      * The social network attribute of the member
@@ -33,10 +38,11 @@ public class Member {
      * @param password
      * @param socialNetwork
      */
-    public Member (String login, String password, SocialNetwork socialNetwork) {
+    public Member (String login, String password, String description, SocialNetwork socialNetwork) {
 
         this.login = login;
         this.password = password;
+        this.description = description;
         this.socialNetwork = socialNetwork;
         this.reviews = new ArrayList<Review>();
 
@@ -102,14 +108,18 @@ public class Member {
      */
     public boolean isItemFilmExists (ArrayList<Item> items, String title, String director) {
 
-        for (int i = 0; i < item.size(); i++) {
+        for (int i = 0; i < items.size(); i++) {
             
             Item tmp_item = items.get(i);
 
-            if (tmp_item.getTitle().equals(title) && tmp_item.getDirector().equals(director)) {
+            if (tmp_item instanceof Film) {
 
-                return true;
+                if (tmp_item.getTitle().equals(title) && tmp_item.getDirector().equals(director)) {
 
+                    return true;
+
+                }
+            
             }
 
         }
@@ -128,7 +138,7 @@ public class Member {
      */
     public boolean itemFilmExists (ArrayList<Item> items, Film film) {
 
-        for (int i = 0; i < item.size(); i++) {
+        for (int i = 0; i < items.size(); i++) {
             
             Item tmp_item = items.get(i);
 
