@@ -96,5 +96,18 @@ public abstract class Item {
         return (sum / this.reviews.size());
 
     }
-    
+
+
+    /**
+     * Checks if the given title matches the title of this item.
+     *
+     * @param title The title to be checked.
+     * @return true if the given title matches this item's title, false otherwise.
+     */
+    public boolean hasTitle (String title) {
+
+        return this.title.equalsIgnoreCase(title);
+
+    }
+
 }

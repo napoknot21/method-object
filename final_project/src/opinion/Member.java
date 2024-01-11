@@ -244,14 +244,14 @@ public class Member {
 
 
     /**
-     * Vérifie si le login donné correspond au login de ce membre.
-     * 
-     * @param login Le login à vérifier.
-     * @return true si les logins correspondent, false sinon.
+     * Checks if the given login matches the login of this member.
+     *
+     * @param login The login to be checked.
+     * @return true if the given login matches this member's login, false otherwise.
      */
     public boolean hasLogin(String login) {
 
-        return this.login.equalsIgnoreCase(login.trim());
+        return this.login.equalsIgnoreCase(login);
     
     }
 

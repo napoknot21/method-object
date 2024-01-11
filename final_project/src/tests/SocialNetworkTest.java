@@ -647,7 +647,7 @@ public class SocialNetworkTest {
 		    if (!sFilm.contains("Guerre et Paix")  &&  !sFilm.contains("aventure historique")  && !sFilm.contains("King Vidor") && !sFilm.contains("Bridget Boland, Robert Westbery") && !sFilm.contains("200"))
 			System.out.println("Erreur 9.6 :  la consultation d'un item film et livre existant ne rend pas la chaîne du film qui correspond ");
 		    if (!sLivre.contains("2.5") || !sFilm.contains("4.0")) 					
-			System.out.println(/*"Erreur 9.6 :  la consultation d'un item film et livre existant ne rend pas les chaînes note qui correspondent */"");				
+			System.out.println("Erreur 9.6 :  la consultation d'un item film et livre existant ne rend pas les chaînes note qui correspondent");				
 		}
 	    }
 	    catch (BadEntryException e) {
