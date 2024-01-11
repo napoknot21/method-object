@@ -65,7 +65,7 @@ public class SocialNetwork implements ISocialNetwork {
         if (password.trim().length() < 4) throw new BadEntryException("Password blank");
         if (description == null) throw new BadEntryException("Description null");
 		for (int i = 0; i < this.members.size(); i++) {
-			if (this.members.get(i).getLogin().equalsIgnoreCase(login.trim())) throw new MemberAlreadyExistsException();
+			if (this.members.get(i).hasLogin(login.trim())) throw new MemberAlreadyExistsException();
 		}
 		this.members.add(new Member (login, password, description, this));
 	}
@@ -78,7 +78,7 @@ public class SocialNetwork implements ISocialNetwork {
 		if (password == null) throw new BadEntryException("Password null");
         if (password.trim().length() < 4) throw new BadEntryException("Password blank");
 		for (int i = 0; i < this.members.size(); i++) {
-			if (this.members.get(i).getLogin().equals(login)) {
+			if (this.members.get(i).hasLogin(login)) {
 				if (!this.members.get(i).getPassword().equals(password)) throw new NotMemberException("Bad information member");
 			}
 		} 
@@ -137,7 +137,7 @@ public class SocialNetwork implements ISocialNetwork {
 		Member member = null;
 		boolean tst_m = false;
 		for (int i = 0; i < this.members.size(); i++) {
-			if (this.members.get(i).getLogin().equals(login)) {
+			if (this.members.get(i).hasLogin(login)) {
 				tst_m = true;
 				if (!this.members.get(i).getPassword().equals(password)) throw new NotMemberException("Bad information member");
 				else member = this.members.get(i);
