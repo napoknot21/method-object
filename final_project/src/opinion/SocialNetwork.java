@@ -9,21 +9,32 @@ import exceptions.*;
  */
 public class SocialNetwork implements ISocialNetwork {
 
+    /**
+     * List of members in the social network.
+     */
     private LinkedList<Member> members;
+
+    /**
+     * List of book items in the social network.
+     */
     private LinkedList<Item> books;
+
+    /**
+     * List of film items in the social network.
+     */
     private LinkedList<Item> films;
+
 
     /**
      * Constructs a new SocialNetwork instance.
      * Initializes empty lists for members, books, and films.
      */
     public SocialNetwork() {
-
         this.members = new LinkedList<Member>();
         this.books = new LinkedList<Item>();
         this.films = new LinkedList<Item>();
-    
-	}
+    }
+
 
 	/**
      * Getters for the Social Network
@@ -34,11 +45,13 @@ public class SocialNetwork implements ISocialNetwork {
     
 	}
 	
+
 	public LinkedList<Item> getFilms() {
 
 		return this.films;
 
 	}
+
 
     public LinkedList<Item> getBooks() {
 
@@ -46,28 +59,31 @@ public class SocialNetwork implements ISocialNetwork {
 
     }
 	
-
+	
 	@Override
 	public int countNbMembers() {
 
 		return this.members.size();
 
 	}
-
+	
+	
 	@Override
 	public int countNbFilms() {
 
 	    return this.films.size();
 
 	}
-
+	
+	
 	@Override
 	public int countNbBooks() {
 
 		return this.books.size();
 
 	}
-
+	
+	
 	@Override
 	public void addMember(String login, String password, String description)
 			throws BadEntryException, MemberAlreadyExistsException {
@@ -302,7 +318,15 @@ public class SocialNetwork implements ISocialNetwork {
 	}
 
 
-
+	/**
+     * Validates the credentials of a member. Checks for non-null and non-empty login and password. 
+     * The password must be at least 4 characters long. The description is also validated if not null.
+     *
+     * @param login The member's login.
+     * @param password The member's password.
+     * @param description The member's description.
+     * @throws BadEntryException If any validation fails.
+     */
 	private void validateMemberCredentials(String login, String password, String description) throws BadEntryException {
 
         if (login == null || login.trim().isEmpty()) {
@@ -320,7 +344,17 @@ public class SocialNetwork implements ISocialNetwork {
     }
 
 
-	
+	/**
+     * Validates the details of a film. Checks for non-null and non-empty title, kind, director, and scenarist. 
+     * The duration must be positive.
+     *
+     * @param title The film's title.
+     * @param kind The film's kind or category.
+     * @param director The film's director.
+     * @param scenarist The film's scenarist.
+     * @param duration The film's duration in minutes.
+     * @throws BadEntryException If any validation fails.
+     */
 	private void validateItemFilmDetails(String title, String kind, String director, String scenarist, int duration) throws BadEntryException {
 
         if (title == null || title.trim().isEmpty() || kind == null || director == null || scenarist == null) {
@@ -334,7 +368,16 @@ public class SocialNetwork implements ISocialNetwork {
     }
 
 
-	
+	/**
+     * Validates the details of a book. Checks for non-null and non-empty title, kind, and author. 
+     * The number of pages must be positive.
+     *
+     * @param title The book's title.
+     * @param kind The book's kind or category.
+     * @param author The book's author.
+     * @param nbPages The number of pages in the book.
+     * @throws BadEntryException If any validation fails.
+     */
 	private void validateItemBookDetails(String title, String kind, String author, int nbPages) throws BadEntryException {
 
 		if (title == null || title.trim().isEmpty() || kind == null || author == null) {
@@ -348,7 +391,14 @@ public class SocialNetwork implements ISocialNetwork {
 	}
 
 
-	
+	/**
+     * Validates the details of a review. The mark must be between 0 and 5. 
+     * The comment must not be null or blank.
+     *
+     * @param mark The review's rating mark.
+     * @param comment The review's comment.
+     * @throws BadEntryException If any validation fails.
+     */
 	private void validateReviewDetails(float mark, String comment) throws BadEntryException {
 
 		if (mark < 0 || mark > 5) throw new BadEntryException("Mark must be positive and not greater than 5.");

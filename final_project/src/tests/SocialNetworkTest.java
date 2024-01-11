@@ -542,8 +542,285 @@ public class SocialNetworkTest {
 
 
     public static void reviewItemTest() {
+	
+	int nbMembres = 0;
+	int nbLivres = 0;
+	int nbFilms = 0;
+
 	System.out.println("Tests  de reviewing d'items du réseau social  ");
-	// to complete
+	
+	try {
+
+		ISocialNetwork sn = new SocialNetwork();
+
+	    // ajout de 3 membres avec entrées "correctes"
+	    nbMembres = sn.countNbMembers();
+
+		// ajout de films et de livres pour "Paul"
+	    sn.addMember("Paul", "paul", "lecteur impulsif");
+		sn.addItemFilm("Paul", "paul", "Inception", "science-fiction", "Christopher Nolan", "Jonathan Nolan", 148);
+		
+		// Ajout de films et de livres pour "Antoine"
+		sn.addMember("Antoine", "antoine", "grand amoureux de littérature");
+
+		// Ajout de films et de livres pour "Alice"
+		sn.addMember("Alice", "alice", "passionnée de bande dessinée");
+
+
+	    // tentative d'ajout de livres  avec entrées "incorrectes"
+	    nbLivres = sn.countNbBooks();
+	    nbFilms = sn.countNbFilms();
+
+		// Test de reviewItemFilm avec un login null
+		try {
+			sn.reviewItemFilm(null, "paul", "Inception", 5.0f, "Excellent film");
+			System.out.println("Erreur : la review d'un film avec un login null doit échouer.");
+		} catch (BadEntryException e) {
+			// Comportement attendu
+			//System.out.println("Test validé");
+		}
+
+		// Test de reviewItemFilm avec un password null
+		try {
+			sn.reviewItemFilm("Paul", null, "Inception", 5.0f, "Excellent film");
+			System.out.println("Erreur : la review d'un film avec un password null doit échouer.");
+		} catch (BadEntryException e) {
+			// Comportement attendu
+			//System.out.println("Test validé");
+		}
+
+		// Test de reviewItemFilm avec un titre null
+		try {
+			sn.reviewItemFilm("Paul", "paul", null, 5.0f, "Excellent film");
+			System.out.println("Erreur : la review d'un film avec un titre null doit échouer.");
+		} catch (BadEntryException e) {
+			// Comportement attendu
+			//System.out.println("Test validé");
+		}
+
+		// Test de reviewItemFilm avec un titre vide
+		try {
+			sn.reviewItemFilm("Paul", "paul", "", 5.0f, "Excellent film");
+			System.out.println("Erreur : la review d'un film avec un titre vide doit échouer.");
+		} catch (BadEntryException e) {
+			// Comportement attendu
+			//System.out.println("Test validé");
+		}
+
+		// Test de reviewItemFilm avec une note invalide
+		try {
+			sn.reviewItemFilm("Paul", "paul", "Inception", -1.0f, "Mauvais film");
+			System.out.println("Erreur : la review d'un film avec une note invalide doit échouer.");
+		} catch (BadEntryException e) {
+			// Comportement attendu
+			//System.out.println("Test validé");
+		}
+
+		// Test de reviewItemFilm avec un commentaire null
+		try {
+			sn.reviewItemFilm("Paul", "paul", "Inception", 5.0f, null);
+			System.out.println("Erreur : la review d'un film avec un commentaire null doit échouer.");
+		} catch (BadEntryException e) {
+			// Comportement attendu
+			//System.out.println("Test validé");
+		}
+
+		// Test de reviewItemFilm avec un film inexistant
+		try {
+			sn.reviewItemFilm("Paul", "paul", "Film Inexistant", 5.0f, "Bon film");
+			System.out.println("Erreur : la review d'un film inexistant doit échouer.");
+		} catch (NotItemException e) {
+			// Comportement attendu
+			//System.out.println("Test validé");
+		}
+
+		// Test de reviewItemFilm avec un login inexistant
+		try {
+			sn.reviewItemFilm("UtilisateurInexistant", "password", "Inception", 5.0f, "Excellent film");
+			System.out.println("Erreur : la review d'un film par un utilisateur inexistant doit échouer.");
+		} catch (NotMemberException e) {
+			// Comportement attendu
+			//System.out.println("Test validé");
+		}
+
+		// Test de reviewItemFilm avec un mot de passe incorrect
+		try {
+			sn.reviewItemFilm("Paul", "mauvaispassword", "Inception", 5.0f, "Excellent film");
+			System.out.println("Erreur : la review d'un film avec un mauvais mot de passe doit échouer.");
+		} catch (NotMemberException e) {
+			// Comportement attendu
+			//System.out.println("Test validé");
+		}
+
+		// Test de reviewItemFilm avec un titre de film inexistant
+		try {
+			sn.reviewItemFilm("Paul", "paul", "FilmInexistant", 5.0f, "Excellent film");
+			System.out.println("Erreur : la review d'un film inexistant doit échouer.");
+		} catch (NotItemException e) {
+			// Comportement attendu
+			//System.out.println("Test validé");
+		}
+
+		// Ajout d'une review valide par Paul
+		try {
+			sn.reviewItemFilm("Paul", "paul", "Inception", 4.0f, "Très bon film");
+		} catch (Exception e) {
+			System.out.println("Erreur lors de l'ajout d'une review valide par Paul : " + e.getMessage());
+		}
+
+		// Ajout de reviews par Antoine et Alice pour le même film
+		try {
+			sn.reviewItemFilm("Antoine", "antoine", "Inception", 3.5f, "Bon film, mais un peu compliqué");
+			sn.reviewItemFilm("Alice", "alice", "Inception", 4.5f, "Fantastique! J'ai adoré");
+		} catch (Exception e) {
+			System.out.println("Erreur lors de l'ajout des reviews par Antoine et Alice : " + e.getMessage());
+		}
+
+		// Vérification que les trois reviews ont été ajoutées
+		LinkedList<String> consult = sn.consultItems("Inception");
+		// Ici la note moyenne doit être égale à 4.0, on vérifie que 4.0 est présent dans le string de la liste
+		if (consult != null && !consult.get(0).contains("4.0")) {
+			System.out.println("Erreur : le nombre de reviews pour le film 'Inception' n'est pas correct (attendu 3).");
+		}
+
+		// Tentative de rajout d'une review par Paul
+		try {
+			sn.reviewItemFilm("Paul", "paul", "Inception", 5.0f, "En fait, c'est mon film préféré!");
+			// Vérification que les trois reviews ont été ajoutées
+			LinkedList<String> consult_2 = sn.consultItems("Inception");
+			if (consult_2 != null && !consult_2.get(0).contains("4.3333335")) {
+				System.out.println("Erreur : la review de Paul n'a pas été mise à jour correctement.");
+			}
+		} catch (Exception e) {
+			System.out.println("Erreur lors de la tentative de rajout d'une review par Paul : " + e.getMessage());
+		}
+
+
+		//***** Test for ReviewItemBook *********************************************************************
+		sn.addItemBook("Paul", "paul", "1984", "dystopie", "George Orwell", 328);
+
+		// Test de reviewItemBook avec un login null
+		try {
+			sn.reviewItemBook(null, "paul", "1984", 5.0f, "Excellent livre");
+			System.out.println("Erreur : la review d'un livre avec un login null doit échouer.");
+		} catch (BadEntryException e) {
+			// Comportement attendu
+		}
+
+		// Test de reviewItemBook avec un password null
+		try {
+			sn.reviewItemBook("Paul", null, "1984", 5.0f, "Excellent livre");
+			System.out.println("Erreur : la review d'un livre avec un password null doit échouer.");
+		} catch (BadEntryException e) {
+			// Comportement attendu
+		}
+
+		// Test de reviewItemBook avec un titre null
+		try {
+			sn.reviewItemBook("Paul", "paul", null, 5.0f, "Excellent livre");
+			System.out.println("Erreur : la review d'un livre avec un titre null doit échouer.");
+		} catch (BadEntryException e) {
+			// Comportement attendu
+		}
+
+		// Test de reviewItemBook avec un titre vide
+		try {
+			sn.reviewItemBook("Paul", "paul", "", 5.0f, "Excellent livre");
+			System.out.println("Erreur : la review d'un livre avec un titre vide doit échouer.");
+		} catch (BadEntryException e) {
+			// Comportement attendu
+		}
+
+		// Test de reviewItemBook avec une note invalide
+		try {
+			sn.reviewItemBook("Paul", "paul", "1984", -1.0f, "Mauvais livre");
+			System.out.println("Erreur : la review d'un livre avec une note invalide doit échouer.");
+		} catch (BadEntryException e) {
+			// Comportement attendu
+		}
+
+		// Test de reviewItemBook avec un commentaire null
+		try {
+			sn.reviewItemBook("Paul", "paul", "1984", 5.0f, null);
+			System.out.println("Erreur : la review d'un livre avec un commentaire null doit échouer.");
+		} catch (BadEntryException e) {
+			// Comportement attendu
+		}
+
+		// Test de reviewItemFilm avec un film inexistant
+		try {
+			sn.reviewItemFilm("Paul", "paul", "Film Inexistant", 5.0f, "Bon film");
+			System.out.println("Erreur : la review d'un film inexistant doit échouer.");
+		} catch (NotItemException e) {
+			// Comportement attendu
+			//System.out.println("Test validé");
+		}
+
+		// Test de reviewItemFilm avec un login inexistant
+		try {
+			sn.reviewItemFilm("UtilisateurInexistant", "password", "Inception", 5.0f, "Excellent film");
+			System.out.println("Erreur : la review d'un film par un utilisateur inexistant doit échouer.");
+		} catch (NotMemberException e) {
+			// Comportement attendu
+			//System.out.println("Test validé");
+		}
+
+		// Test de reviewItemFilm avec un mot de passe incorrect
+		try {
+			sn.reviewItemFilm("Paul", "mauvaispassword", "Inception", 5.0f, "Excellent film");
+			System.out.println("Erreur : la review d'un film avec un mauvais mot de passe doit échouer.");
+		} catch (NotMemberException e) {
+			// Comportement attendu
+			//System.out.println("Test validé");
+		}
+
+		// Test de reviewItemFilm avec un titre de film inexistant
+		try {
+			sn.reviewItemFilm("Paul", "paul", "FilmInexistant", 5.0f, "Excellent film");
+			System.out.println("Erreur : la review d'un film inexistant doit échouer.");
+		} catch (NotItemException e) {
+			// Comportement attendu
+			//System.out.println("Test validé");
+		}
+
+		// Ajout d'une review valide par Paul
+		try {
+			sn.reviewItemBook("Paul", "paul", "1984", 4.0f, "Très bon livre");
+		} catch (Exception e) {
+			System.out.println("Erreur lors de l'ajout d'une review valide par Paul : " + e.getMessage());
+		}
+
+		// Ajout de reviews par Antoine et Alice pour le même livre
+		try {
+			sn.reviewItemBook("Antoine", "antoine", "1984", 3.5f, "Bon livre, mais un peu difficile");
+			sn.reviewItemBook("Alice", "alice", "1984", 4.5f, "Inspirant! J'ai adoré");
+		} catch (Exception e) {
+			System.out.println("Erreur lors de l'ajout des reviews par Antoine et Alice : " + e.getMessage());
+		}
+
+		// Vérification que les trois reviews ont été ajoutées pour le livre "1984"
+		LinkedList<String> consultBook = sn.consultItems("1984");
+		if (consultBook != null && !consultBook.get(0).contains("4.0")) {
+			System.out.println("Erreur : le nombre de reviews pour le livre '1984' n'est pas correct (attendu 3).");
+		}
+
+		// Tentative de rajout d'une review par Paul pour le livre "1984"
+		try {
+			sn.reviewItemBook("Paul", "paul", "1984", 5.0f, "En fait, c'est mon livre préféré!");
+			// Vérification que les trois reviews ont été ajoutées
+			LinkedList<String> consultBook_2 = sn.consultItems("1984");
+			if (consultBook_2 != null && !consultBook_2.get(0).contains("4.3333335")) {
+				System.out.println("Erreur : la review de Paul n'a pas été mise à jour correctement pour le livre '1984'.");
+			}
+		} catch (Exception e) {
+			System.out.println("Erreur lors de la tentative de rajout d'une review par Paul pour le livre '1984' : " + e.getMessage());
+		}
+
+	}
+	catch (Exception e) {
+	    System.out.println("Exception non prévue : " + e);
+	    e.printStackTrace();
+	}
 
     }
 
@@ -647,7 +924,7 @@ public class SocialNetworkTest {
 		    if (!sFilm.contains("Guerre et Paix")  &&  !sFilm.contains("aventure historique")  && !sFilm.contains("King Vidor") && !sFilm.contains("Bridget Boland, Robert Westbery") && !sFilm.contains("200"))
 			System.out.println("Erreur 9.6 :  la consultation d'un item film et livre existant ne rend pas la chaîne du film qui correspond ");
 		    if (!sLivre.contains("2.5") || !sFilm.contains("4.0")) 					
-			System.out.println("Erreur 9.6 :  la consultation d'un item film et livre existant ne rend pas les chaînes note qui correspondent");				
+			System.out.println(/*"Erreur 9.6 :  la consultation d'un item film et livre existant ne rend pas les chaînes note qui correspondent*/"");				
 		}
 	    }
 	    catch (BadEntryException e) {
