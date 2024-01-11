@@ -1,27 +1,28 @@
 package opinion;
 
 import java.util.LinkedList;
+import exceptions.*;
 
-import exceptions.BadEntryException;
-import exceptions.ItemBookAlreadyExistsException;
-import exceptions.ItemFilmAlreadyExistsException;
-import exceptions.MemberAlreadyExistsException;
-import exceptions.NotItemException;
-import exceptions.NotMemberException;
-
+/**
+ * Represents a social network.
+ * This class manages members, books, and films, along with their interactions in the form of reviews.
+ */
 public class SocialNetwork implements ISocialNetwork {
 
     private LinkedList<Member> members;
-
-	private LinkedList<Item> books;
+    private LinkedList<Item> books;
     private LinkedList<Item> films;
 
-    public SocialNetwork () {
+    /**
+     * Constructs a new SocialNetwork instance.
+     * Initializes empty lists for members, books, and films.
+     */
+    public SocialNetwork() {
 
         this.members = new LinkedList<Member>();
-		this.films = new LinkedList<Item>();
         this.books = new LinkedList<Item>();
-
+        this.films = new LinkedList<Item>();
+    
 	}
 
 	/**

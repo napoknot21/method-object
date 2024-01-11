@@ -2,54 +2,99 @@ package opinion;
 
 import java.util.LinkedList;
 
+/**
+ * Abstract representation of an item in a social network.
+ * This class encapsulates the basic details of an item such as its title and kind, along with a list of reviews.
+ */
 public abstract class Item {
 
-
+    /**
+     * The title of the item.
+     */
     private String title;
 
+    /**
+     * The kind or category of the item.
+     */
     private String kind;
 
+    /**
+     * A list of reviews associated with the item.
+     */
     private LinkedList<Review> reviews;
 
-    
-    public Item (String title, String kind) {
+
+    /**
+     * Constructs a new Item with a specified title and kind.
+     * Initializes an empty list of reviews.
+     * 
+     * @param title The title of the item.
+     * @param kind  The kind or category of the item.
+     */
+    public Item(String title, String kind) {
 
         this.title = title;
         this.kind = kind;
         this.reviews = new LinkedList<Review>();
-
-    }
-
-    public String getTitle () {
-
-        return this.title;
     
     }
 
-    public String getKind () {
+
+    /**
+     * Retrieves the title of the item.
+     * 
+     * @return The title of the item.
+     */
+    public String getTitle() {
+
+        return this.title;
+
+    }
+
+
+    /**
+     * Retrieves the kind or category of the item.
+     * 
+     * @return The kind or category of the item.
+     */
+    public String getKind() {
 
         return this.kind;
 
     }
 
-    public LinkedList<Review> getReviews () {
+
+    /**
+     * Retrieves the list of reviews associated with the item.
+     * 
+     * @return A LinkedList of reviews for the item.
+     */
+    public LinkedList<Review> getReviews() {
 
         return this.reviews;
 
     }
 
 
-    public float averageNote () {
+    /**
+     * Calculates and returns the average rating of the item based on its reviews.
+     * Returns Float.NaN if there are no reviews.
+     * 
+     * @return The average rating as a float, or Float.NaN if no reviews are present.
+     */
+    public float averageNote() {
 
         if (this.reviews.size() == 0) return Float.NaN;
 
-        float ret = 0;
+        float sum = 0;
 
         for (Review r : this.reviews) {
 
-            ret = (float) (ret + r.getMark());
-
+            sum += r.getMark();
         }
-        return (ret/this.reviews.size());
+
+        return (sum / this.reviews.size());
+
     }
+    
 }

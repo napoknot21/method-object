@@ -1,6 +1,6 @@
 package opinion;
 
-import java.util.LinkedList;
+import exceptions.*;
 
 /**
  * Represents a member in the social network.
@@ -167,5 +167,79 @@ public class Member {
 
     }
 
+
+    /**
+     * Adds a new film item to the social network.
+     *
+     * @param title       The title of the film.
+     * @param kind        The kind or category of the film.
+     * @param director    The director of the film.
+     * @param scenarist   The scenarist of the film.
+     * @param duration    The duration of the film in minutes.
+     * @throws BadEntryException               If the film details are invalid.
+     * @throws NotMemberException              If the member is not valid.
+     * @throws ItemFilmAlreadyExistsException  If a film with the same title already exists.
+     */
+    public void addItemFilm (String title, String kind, String director, String scenarist,
+			int duration) throws BadEntryException, NotMemberException, ItemFilmAlreadyExistsException {
+
+        this.getSocialNetwork().addItemFilm(this.getLogin(), this.getPassword(), title, kind, director, scenarist, duration);
+
+    }
+
+
+    /**
+     * Adds a new book item to the social network.
+     *
+     * @param title       The title of the book.
+     * @param kind        The kind or category of the book.
+     * @param author      The author of the book.
+     * @param nbPages     The number of pages in the book.
+     * @throws BadEntryException               If the book details are invalid.
+     * @throws NotMemberException              If the member is not valid.
+     * @throws ItemBookAlreadyExistsException  If a book with the same title already exists.
+     */
+    public void addItemBook(String login, String password, String title, String kind, String author, int nbPages)
+			throws BadEntryException, NotMemberException, ItemBookAlreadyExistsException {
+
+        this.getSocialNetwork().addItemBook(this.getLogin(), this.getPassword(), title, kind, author, nbPages);
+        
+    }
+
+
+    /**
+     * Adds a new review for a book in the social network.
+     *
+     * @param title    The title of the book.
+     * @param mark     The rating mark for the book.
+     * @param comment  The comment for the book review.
+     * @throws BadEntryException      If the review details are invalid.
+     * @throws NotMemberException     If the member is not valid.
+     * @throws NotItemException       If the book does not exist.
+     */
+    public void addBookReview (String title, float mark, String comment) 
+            throws BadEntryException, NotMemberException, NotItemException {
+
+        this.getSocialNetwork().reviewItemFilm(this.getLogin(), this.getPassword(), title, mark, comment);
+
+    }
+
+
+    /**
+     * Adds a new review for a film in the social network.
+     *
+     * @param title    The title of the film.
+     * @param mark     The rating mark for the film.
+     * @param comment  The comment for the film review.
+     * @throws BadEntryException      If the review details are invalid.
+     * @throws NotMemberException     If the member is not valid.
+     * @throws NotItemException       If the film does not exist.
+     */
+    public void addFilmReview (String title, float mark, String comment)
+            throws BadEntryException, NotMemberException, NotItemException {
+
+        this.getSocialNetwork().reviewItemFilm(this.getLogin(), this.getPassword(), title, mark, comment);
+
+    }
 
 }
